@@ -17,46 +17,49 @@ import Modal from './Components/Modal';
 
 function App() {
   const [products, setProducts] = useState({
-    product : [],
-    detailProduct : detailProduct,
-    cart : [],
-    modalOpen : true,
-    modalProduct : detailProduct
+    product: [],
+    detailProduct: detailProduct,
+    cart: [],
+    modalOpen: false,
+    modalProduct: detailProduct,
+    cartSubTotal: 0,
+    cartTax: 0,
+    cartTotal: 0
   });
 
   useEffect(() => {
     let tempProduct = [];
     storeProducts.forEach((item) => {
-      const singleItem = {...item};
+      const singleItem = { ...item };
       tempProduct = [...tempProduct, singleItem];
     });
     setProducts((prevState) => ({
       ...prevState,
-      product : tempProduct
+      product: tempProduct
     }));
   }, []);
 
   // getting a id of product from selected item and coparing with store data
   const getItem = id => {
-    const product = products.product.find(item => item.id === id );
+    const product = products.product.find(item => item.id === id);
     console.log('product details from json', product);
     return product;
   };
-// once search id matches then set that product data to detailProduct JSON
+  // once search id matches then set that product data to detailProduct JSON
   const handleDetail = id => {
     console.log('click from product page and id is', id)
     const product = getItem(id);
-    
+
     setProducts(prevState => ({
       ...prevState,
-      detailProduct : product
+      detailProduct: product
     }));
   };
 
   const addToCart = id => {
     console.log(`id from details page ${id}`);
     let tempProducts = [...products.product];
-    const index = tempProducts.indexOf(getItem(id)); 
+    const index = tempProducts.indexOf(getItem(id));
     const product = tempProducts[index];
     product.inCart = true;
     product.count = 1;
@@ -65,8 +68,8 @@ function App() {
 
     setProducts(prevState => ({
       ...prevState,
-      product : tempProducts,
-      cart : [...products.cart, product]
+      product: tempProducts,
+      cart: [...products.cart, product]
     }));
   };
 
@@ -74,17 +77,48 @@ function App() {
     const product = getItem(id);
     setProducts(prevState => ({
       ...prevState,
-      modalProduct : product,
-      modalOpen : true
+      modalProduct: product,
+      modalOpen: true
     }));
   };
 
   const closeModal = () => {
     setProducts(prevState => ({
       ...prevState,
-      modalOpen : false
+      modalOpen: false
     }))
+  };
+
+  const increment = (id) => {
+    console.log('increment function');
   }
+
+  const decrement = (id) => {
+    console.log('decrement function');
+  }
+
+  const removeItem = (id) => {
+    console.log('item remove function');
+  }
+
+  const clearCart = () => {
+    console.log('cart cleared');
+  }
+  
+  useEffect(() => {
+    let subTotal = 0;
+    products.cart.map(item => (subTotal += item.total));
+    const tempTax = subTotal * 0.1;
+    const tax = parseFloat(tempTax.toFixed(2));
+    const total = subTotal + tax;
+    setProducts(prevState => ({
+      ...prevState,
+      cartSubTotal: subTotal,
+      cartTax: tax,
+      cartTotal: total
+    }))
+  }, [products.cart])
+
 
   // useEffect(() => {
   //   setProducts(prevState => ({
@@ -97,24 +131,28 @@ function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={"Parthiban"}>
-      <ProductContext.Provider value={{
-        ...products,
-        handleDetail,
-        addToCart,
-        openModal,
-        closeModal
-      }}>
-      <Navbar />
-      <Routes>
-        <Route index element={<ProductList />}  exact/>
-        <Route path='/details' element={<Details />} />
-        <Route path='/cart' element={<Cart />} />
-        <Route path='/logout' element={<Logout />} />
-        <Route path='/user' element={<User />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
-      <Modal />
-      </ProductContext.Provider>
+        <ProductContext.Provider value={{
+          ...products,
+          handleDetail,
+          addToCart,
+          openModal,
+          closeModal,
+          increment,
+          decrement,
+          removeItem,
+          clearCart
+        }}>
+          <Navbar />
+          <Routes>
+            <Route index element={<ProductList />} exact />
+            <Route path='/details' element={<Details />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/logout' element={<Logout />} />
+            <Route path='/user' element={<User />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <Modal />
+        </ProductContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
   );
