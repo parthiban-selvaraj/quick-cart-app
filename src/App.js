@@ -12,12 +12,16 @@ import User from './Components/User';
 import { ProductContext, UserContext } from './Components/Context/Context';
 import { useState, useEffect } from 'react';
 import { storeProducts, detailProduct } from './data';
+import Modal from './Components/Modal';
 
 
 function App() {
   const [products, setProducts] = useState({
     product : [],
-    detailProduct : detailProduct
+    detailProduct : detailProduct,
+    cart : [],
+    modalOpen : true,
+    modalProduct : detailProduct
   });
 
   useEffect(() => {
@@ -32,13 +36,55 @@ function App() {
     }));
   }, []);
 
-  const handleDetail = () => {
-    console.log("hello from detail");
+  // getting a id of product from selected item and coparing with store data
+  const getItem = id => {
+    const product = products.product.find(item => item.id === id );
+    console.log('product details from json', product);
+    return product;
+  };
+// once search id matches then set that product data to detailProduct JSON
+  const handleDetail = id => {
+    console.log('click from product page and id is', id)
+    const product = getItem(id);
+    
+    setProducts(prevState => ({
+      ...prevState,
+      detailProduct : product
+    }));
   };
 
   const addToCart = id => {
     console.log(`id from details page ${id}`);
+    let tempProducts = [...products.product];
+    const index = tempProducts.indexOf(getItem(id)); 
+    const product = tempProducts[index];
+    product.inCart = true;
+    product.count = 1;
+    const price = product.price;
+    product.total = price;
+
+    setProducts(prevState => ({
+      ...prevState,
+      product : tempProducts,
+      cart : [...products.cart, product]
+    }));
   };
+
+  const openModal = id => {
+    const product = getItem(id);
+    setProducts(prevState => ({
+      ...prevState,
+      modalProduct : product,
+      modalOpen : true
+    }));
+  };
+
+  const closeModal = () => {
+    setProducts(prevState => ({
+      ...prevState,
+      modalOpen : false
+    }))
+  }
 
   // useEffect(() => {
   //   setProducts(prevState => ({
@@ -54,7 +100,9 @@ function App() {
       <ProductContext.Provider value={{
         ...products,
         handleDetail,
-        addToCart
+        addToCart,
+        openModal,
+        closeModal
       }}>
       <Navbar />
       <Routes>
@@ -65,6 +113,7 @@ function App() {
         <Route path='/user' element={<User />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <Modal />
       </ProductContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>

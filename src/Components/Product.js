@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-// import { ProductContext } from './Context/Context'
+import { ProductContext } from './Context/Context'
 import ProductWrapper from './Styles/ProductWrapper';
 import PropTypes from 'prop-types'; 
 
 const Product = ({ product }) => {
-  // const productFromContext = useContext(ProductContext)
+  const productFromContext = useContext(ProductContext);
   return (
     <ProductWrapper className='col-9 mx-auto col-md-6 col-lg-3 my-3'>
-      {console.log("hello", product)}
+      {console.log("hello", productFromContext.product, product.id)}
       <div className='card'>
-        <div className='img-container p-5' onClick={() => console.log(`you clicked on image ${product.title}`)}>
+        <div className='img-container p-5' onClick={() => productFromContext.handleDetail(product.id)}>
           <Link to={"/details"}>
             <img
               className='card-img-top'
@@ -20,7 +20,12 @@ const Product = ({ product }) => {
           <button
             className='cart-btn'
             disabled={product.inCart ? true : false}
-            onClick={() => console.log('added to cart')}>
+            onClick={() => {
+              productFromContext.addToCart(product.id);
+              productFromContext.openModal(product.id);
+              }
+            }>
+              {console.log("state after add to cart", productFromContext)}
             {product.inCart ?
               (
                 <p className='text-capitalize mb-0' disabled>in cart</p>
