@@ -12,7 +12,7 @@ const ProductList = () => {
                 <div className='container'>
                     <Title name={'mobile'} title={'products'}/>
                     <div className='row'>
-                        {console.log(productFromContext)}
+                        {console.log("from context", productFromContext)}
                         {
                             productFromContext.product ? 
                             productFromContext.product.map((product) => {

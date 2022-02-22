@@ -16,30 +16,46 @@ import { storeProducts, detailProduct } from './data';
 
 function App() {
   const [products, setProducts] = useState({
-    product : storeProducts,
+    product : [],
     detailProduct : detailProduct
   });
+
+  useEffect(() => {
+    let tempProduct = [];
+    storeProducts.forEach((item) => {
+      const singleItem = {...item};
+      tempProduct = [...tempProduct, singleItem];
+    });
+    setProducts((prevState) => ({
+      ...prevState,
+      product : tempProduct
+    }));
+  }, []);
 
   const handleDetail = () => {
     console.log("hello from detail");
   };
 
-  const addToCart = () => {
-    console.log("hello from cart");
+  const addToCart = id => {
+    console.log(`id from details page ${id}`);
   };
 
-  useEffect(() => {
-    setProducts(prevState => ({
-      ...prevState,
-      handleDetail,
-      addToCart
-    }));
-  }, []);
+  // useEffect(() => {
+  //   setProducts(prevState => ({
+  //     ...prevState,
+  //     handleDetail,
+  //     addToCart
+  //   }));
+  // }, []);
 
   return (
     <BrowserRouter>
       <UserContext.Provider value={"Parthiban"}>
-      <ProductContext.Provider value={products}>
+      <ProductContext.Provider value={{
+        ...products,
+        handleDetail,
+        addToCart
+      }}>
       <Navbar />
       <Routes>
         <Route index element={<ProductList />}  exact/>
