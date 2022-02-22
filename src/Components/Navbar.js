@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
+import { UserContext } from './Context/Context';
 import ButtonContainer from './Styles/ButtonContainer';
 import NavWrapper from './Styles/NavWrapper';
 
 const Navbar = () => {
+    const valueFromContext = useContext(UserContext)
     return (
         <NavWrapper className='navbar navbar-expand-sm navbar-dark px-sm-4'>
             <Link to={'/'} className='navbar-brand'><i className="fa-solid fa-house fa-1x"></i> Home</Link>
@@ -12,6 +14,9 @@ const Navbar = () => {
                     <Link to={'/'} className='nav-link'>products</Link>
                 </li>
             </ul>
+            <div className='nav-item align-items-center ms-auto'>
+                <p style={{marginBottom: '0px', color:'var(--mainWhite)'}}>Hello, {valueFromContext}</p>
+            </div>
 
             <Link to={'/cart'} className='ms-auto'>
                 <ButtonContainer>

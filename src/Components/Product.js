@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ProductContext } from './Context/Context'
 
-const Product = () => {
+const Product = ({product}) => {
+  const productFromContext = useContext(ProductContext)
   return (
-    <div><h3>Prodcut Page</h3></div>
+    <div>
+      {console.log("hello", product)}
+      <h3>{product.title}</h3>
+    </div>
   )
 }
 
