@@ -36,7 +36,7 @@ const CartTotals = ({ product }) => {
             <ButtonContainer>continue shopping</ButtonContainer>
             </Link>
             <Link to={"/checkout"}>
-            <ButtonContainer cart style={{paddingRight : "0px"}}>checkout</ButtonContainer>            
+            <ButtonContainer cart>checkout</ButtonContainer>            
             </Link>
           </div>
         </div>

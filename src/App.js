@@ -23,14 +23,28 @@ function App() {
 
   var productName = "";
 
-  // fetching persisted products state from local storage
-  const savedState = JSON.parse(localStorage.getItem('parthiban'));
+  
+   // fetching persisted user state from local storage
+  const userState = JSON.parse(localStorage.getItem('user'));
 
+  const [user, setUser] = useState({
+    userId : userState ? userState.userId : 'parthi123',
+    firstName : userState ? userState.firstName : 'parthiban',
+    lastName : userState ? userState.lastName : 'selvaraj',
+    email : userState ? userState.email : 'test@g.com',
+    admin : userState ? userState.admin : false,
+    loginStatus : true
+  });
+
+  // fetching persisted products state from local storage
+  const savedState = JSON.parse(localStorage.getItem(`${user.firstName}`));
+  
   // populate fresh state values if no data persisted in local storage
   const [products, setProducts] = useState({
     product: savedState ? savedState.product : [],
     detailProduct: savedState ? savedState.detailProduct : detailProduct,
     cart: savedState ? savedState.cart : [],
+    user : savedState ? savedState.user : [],
     modalOpen: false,
     modalProduct: [],
     cartSubTotal: savedState ? savedState.cartSubTotal : 0,
@@ -133,8 +147,13 @@ function App() {
 
   // to persist products details to local storage
   useEffect(() => {
-    localStorage.setItem("parthiban", JSON.stringify({ ...products }))
-  }, [products]);
+    localStorage.setItem(`${user.firstName}`, JSON.stringify({ ...products }))
+  }, [products, user.firstName]);
+
+  // to persist user details to local storage
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify({ ...user }))
+  }, [user]);
 
   const getProductName = (e) => {
     const recipeName = e.target.elements.productName.value;
@@ -175,7 +194,7 @@ function App() {
   return (
 
     <BrowserRouter>
-      <UserContext.Provider value={"Parthiban"}>
+      <UserContext.Provider value={{user}}>
         <ProductContext.Provider value={{
           ...products,
           handleDetail,
@@ -198,6 +217,7 @@ function App() {
             <Route path='/logout' element={<Logout />} />
             <Route path='/user' element={<User />} />
             <Route path='/checkout' element={<Checkout />} />
+            <Route path='/login' element={<Login />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
           <Modal />

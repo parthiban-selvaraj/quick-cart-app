@@ -19,7 +19,7 @@ const Navbar = () => {
                 </li>
             </ul>
             <div className='nav-item align-items-center ms-auto'>
-                <p style={{marginBottom: '0px', color:'var(--mainWhite)'}}>Hello, {valueFromContext}</p>
+                <p style={{marginBottom: '0px', color:'var(--mainWhite)', fontSize:"1.2rem"}} className="text-capitalize">hello, {valueFromContext.user.firstName}</p>
             </div>
 
             <Link to={'/cart'} className='ms-auto'>
