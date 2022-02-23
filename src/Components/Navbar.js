@@ -5,10 +5,14 @@ import ButtonContainer from './Styles/ButtonContainer';
 import NavWrapper from './Styles/NavWrapper';
 
 const Navbar = () => {
+    const value = true;
     const valueFromContext = useContext(UserContext)
     return (
+        
         <NavWrapper className='navbar navbar-expand-sm navbar-dark px-sm-4'>
-            <Link to={'/'} className='navbar-brand'><i className="fa-solid fa-house fa-1x"></i> Home</Link>
+            { value ?
+            <>
+            <Link to={'/about'} className='navbar-brand'><i className="fa-solid fa-house fa-1x"></i> Home</Link>
             <ul className='navbar-nav align-items-center'>
                 <li className='nav-item me-5'>
                     <Link to={'/'} className='nav-link'>products</Link>
@@ -35,7 +39,9 @@ const Navbar = () => {
                     <i className="fa-solid fa-right-from-bracket" /> logout
                 </ButtonContainer>
             </Link>
-
+            </>
+            : null }
+            
         </NavWrapper>
     )
 }

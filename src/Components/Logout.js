@@ -1,20 +1,32 @@
-import React from 'react'
-import Login from './Login'
+import React, {useEffect} from 'react'
+import { Link } from 'react-router-dom'
+// import Login from './Login'
+import ButtonContainer from './Styles/ButtonContainer'
 
 const Logout = () => {
-    const login = {
-        status : true
-    }
+    // const login = {
+    //     status : false
+    // }
 
+    // useEffect((setLogin) => {
+    //     setLogin = () => {
+    //         login.status = true;
+    //         console.log('inside login value', login.status)
+    //     }
+    // }, [login])
+    
+    
     return (
         <>
-            <h1>You are logged out. Click here to 
-                <button onClick={() => !login.status}>
-                sign in
-                </button> 
-            </h1>
+            <h1>You are logged out. Click here to </h1>
+            <Link to={"/"}>
+                <ButtonContainer >
+                  login
+                </ButtonContainer>
+              </Link>
             {/* add signin components */}
-            { login.status && <Login />}
+            {/* {console.log('login value', login.status)}
+            { login.status && <Login />} */}
         </>
     )
 }

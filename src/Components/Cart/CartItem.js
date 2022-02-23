@@ -1,14 +1,14 @@
 import React from 'react'
 
 const CartItem = ({ item, product }) => {
-    const { id, title, img, price, total, count } = item;
+    const { id, title, image, price, total, count } = item;
     const { increment, decrement, removeItem } = product;
     return (
         <div className='row my-2 text-capitalize text-center align-items-center'>
             <div className='col-10 mx-auto col-lg-2'>
                 <img
                     className='img-fluid'
-                    src={img}
+                    src={image}
                     alt={title}
                     style={{ width: "5rem", height: "5rem" }}
                 />

@@ -19,7 +19,7 @@ const Modal = () => {
                                 <h5>item added</h5>
                                 <img
                                     className='img-fluid'
-                                    src={productFromContext.modalProduct.img}
+                                    src={productFromContext.modalProduct.image}
                                     alt={productFromContext.modalProduct.title}
                                 />
                                 <h5>{productFromContext.modalProduct.title}</h5>

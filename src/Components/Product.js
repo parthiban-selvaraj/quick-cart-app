@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { ProductContext } from './Context/Context'
 import ProductWrapper from './Styles/ProductWrapper';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 const Product = ({ product }) => {
   const productFromContext = useContext(ProductContext);
@@ -14,7 +14,7 @@ const Product = ({ product }) => {
           <Link to={"/details"}>
             <img
               className='card-img-top'
-              src={product.img}
+              src={product.image}
               alt={product.title} />
           </Link>
           <button
@@ -23,9 +23,9 @@ const Product = ({ product }) => {
             onClick={() => {
               productFromContext.addToCart(product.id);
               productFromContext.openModal(product.id);
-              }
+            }
             }>
-              {console.log("state after add to cart", productFromContext)}
+            {/* {console.log("state after add to cart", productFromContext)} */}
             {product.inCart ?
               (
                 <p className='text-capitalize mb-0' disabled>in cart</p>
@@ -34,26 +34,29 @@ const Product = ({ product }) => {
               )
             }
           </button>
-          </div>
-          <div className='card-footer d-flex justify-content-between'>
-            <p className='align-self-center mb-0'>{product.title}</p>
-            <h5 className='text-blue font-italic mb-0'> 
-              <span className='mr-1'>₹</span>
-              {product.price}
-            </h5>
-          </div>
+        </div>
+        <div className='card-footer d-flex justify-content-between'>
+          <p className='align-self-center mb-0'>
+            {product.title < 20 ?
+              `${product.title}` : `${product.title.substring(0, 25)}...`}
+          </p>
+          <h5 className='text-blue font-italic mb-0'>
+            <span className='mr-1'>₹</span>
+            {product.price}
+          </h5>
+        </div>
       </div>
     </ProductWrapper>
   )
 }
 
 Product.propTypes = {
-  product : PropTypes.shape({
-    id : PropTypes.number,
-    title : PropTypes.string,
-    img : PropTypes.string,
-    price : PropTypes.number,
-    inCart : PropTypes.bool
+  product: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    img: PropTypes.string,
+    price: PropTypes.number,
+    inCart: PropTypes.bool
   }).isRequired
 };
 

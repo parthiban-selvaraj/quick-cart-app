@@ -37,7 +37,7 @@ body {
 }
 
 .btn-black:hover {
-  background: var(--mainDark) !important;
+  background: var(--mainBlue) !important;
   color: var(--mainWhite) !important;
 }
 
@@ -48,5 +48,44 @@ body {
 }
 
 .cart-icon:hover {
-  color: orangered !important;
+  color: #e74c3c !important;
+}
+
+
+.form__input {
+  background: transparent;
+  border: 0;
+  border-bottom: solid 2px var(--mainBlue);
+  margin-right: 10px;
+  letter-spacing: 2px;
+  width: 20%;
+  padding: 0.4rem;
+  font-style: italic;
+}
+
+.form__button {
+  border: solid 2px var(--lightBlue);
+  background: transparent;
+  padding: 0.2rem 0.9rem;
+  margin: 0 0.2rem;
+  border-radius: 1px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-left: 0.7rem;
+}
+
+.form__button:hover {
+  background: var(--lightBlue);
+  color: var(--mainBlue);
+  font-size: 1.1rem;
+}
+
+input[type="text"] { 
+  outline: none;
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #f3f3f3 inset;
+  -webkit-text-fill-color: #2c3e50 !important;
 }

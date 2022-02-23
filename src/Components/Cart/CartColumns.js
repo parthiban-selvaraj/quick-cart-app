@@ -3,7 +3,7 @@ import React from 'react'
 const CartColumns = () => {
     return (
         <div className='container-fluid text-center d-none d-lg-block'>
-            <hr style={{marginBottom : "1rem", color: "grey"}}></hr>
+            <hr style={{marginBottom : "1rem", borderTop: "1.5px solid darkblue", background : "transparent"}}></hr>
             <div className='row'>
                 <div className='col-10 mx-auto col-lg-2'>
                     <p className='text-uppercase'>products</p>
@@ -30,7 +30,7 @@ const CartColumns = () => {
                 </div>
 
             </div>
-            <hr style={{margin : "0px", color: "grey"}}></hr>
+            <hr style={{margin : "0rem", borderTop: "1.5px solid darkblue", background : "transparent"}}></hr>
         </div>
     )
 }

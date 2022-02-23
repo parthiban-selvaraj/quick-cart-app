@@ -13,31 +13,42 @@ import { ProductContext, UserContext } from './Components/Context/Context';
 import { useState, useEffect } from 'react';
 import { storeProducts, detailProduct } from './data';
 import Modal from './Components/Modal';
+import Login from './Components/Login';
+import About from './Components/About';
+import Form from './Components/Form';
+import Checkout from './Components/Cart/Checkout';
 
 
 function App() {
+
+  var productName = "";
+
+  // fetching persisted products state from local storage
+  const savedState = JSON.parse(localStorage.getItem('parthiban'));
+
+  // populate fresh state values if no data persisted in local storage
   const [products, setProducts] = useState({
-    product: [],
-    detailProduct: detailProduct,
-    cart: [],
+    product: savedState ? savedState.product : [],
+    detailProduct: savedState ? savedState.detailProduct : detailProduct,
+    cart: savedState ? savedState.cart : [],
     modalOpen: false,
-    modalProduct: detailProduct,
-    cartSubTotal: 0,
-    cartTax: 0,
-    cartTotal: 0
+    modalProduct: [],
+    cartSubTotal: savedState ? savedState.cartSubTotal : 0,
+    cartTax: savedState ? savedState.cartTax : 0,
+    cartTotal: savedState ? savedState.cartTotal : 0
   });
 
-  useEffect(() => {
-    let tempProduct = [];
-    storeProducts.forEach((item) => {
-      const singleItem = { ...item };
-      tempProduct = [...tempProduct, singleItem];
-    });
-    setProducts((prevState) => ({
-      ...prevState,
-      product: tempProduct
-    }));
-  }, []);
+  // useEffect(() => {
+  //   let tempProduct = [];
+  //   storeProducts.forEach((item) => {
+  //     const singleItem = { ...item };
+  //     tempProduct = [...tempProduct, singleItem];
+  //   });
+  //   setProducts((prevState) => ({
+  //     ...prevState,
+  //     product: tempProduct
+  //   }));
+  // }, []);
 
   // getting a id of product from selected item and coparing with store data
   const getItem = id => {
@@ -104,7 +115,7 @@ function App() {
   const clearCart = () => {
     console.log('cart cleared');
   }
-  
+
   useEffect(() => {
     let subTotal = 0;
     products.cart.map(item => (subTotal += item.total));
@@ -117,8 +128,41 @@ function App() {
       cartTax: tax,
       cartTotal: total
     }))
-  }, [products.cart])
+  }, [products.cart]);
 
+
+  // to persist products details to local storage
+  useEffect(() => {
+    localStorage.setItem("parthiban", JSON.stringify({ ...products }))
+  }, [products]);
+
+  const getProductName = (e) => {
+    const recipeName = e.target.elements.productName.value;
+    productName = recipeName;
+
+    e.preventDefault();
+
+    // const api_call = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${recipeName}`);
+
+    // const data = await api_call.json()
+
+    console.log('hello', productName);
+    fetch(`https://fakestoreapi.com/products/category/${productName}`)
+      .then((res) => res.json())
+      .then((res) => setProducts(prevState => ({
+        ...prevState,
+        product: res
+      })));
+    // setRecipes(data.recipes);
+
+    // console.log('get recipe function', recipes);
+    // console.log('empty screen');
+    window.scroll(0, 130);
+  };
+
+  // useEffect(() => {
+  //   console.log('check');
+  // }, [productName]);
 
   // useEffect(() => {
   //   setProducts(prevState => ({
@@ -129,6 +173,7 @@ function App() {
   // }, []);
 
   return (
+
     <BrowserRouter>
       <UserContext.Provider value={"Parthiban"}>
         <ProductContext.Provider value={{
@@ -140,15 +185,19 @@ function App() {
           increment,
           decrement,
           removeItem,
-          clearCart
+          clearCart,
+          getProductName
         }}>
           <Navbar />
           <Routes>
-            <Route index element={<ProductList />} exact />
+            {/* <Route path='/' element={<Login />} > */}
+            <Route path='/' element={<ProductList />} exact />
+            <Route path='/about' element={<About />} />
             <Route path='/details' element={<Details />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/logout' element={<Logout />} />
             <Route path='/user' element={<User />} />
+            <Route path='/checkout' element={<Checkout />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
           <Modal />
