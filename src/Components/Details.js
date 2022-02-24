@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ProductContext, UserContext } from './Context/Context';
 import ButtonContainer from './Styles/ButtonContainer';
 import { EditText, EditTextarea } from 'react-edit-text';
@@ -9,6 +9,7 @@ const Details = () => {
 
   const valueFromContext = useContext(UserContext);
   const location = useLocation();
+  const navigate = useNavigate();
   const editOption = location.state ? location.state.editOption : false
   // var editOption = false;
   const [edit, setEdit] = useState({
@@ -25,8 +26,26 @@ const Details = () => {
     console.log('inside click', edit)
   };
 
+  const editProduct = {
+    id: 15,
+    title: "BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats",
+    price: 56.99,
+    description: "Note:The Jackets is US standard size, Please choose size as your usual wear Material: 100% Polyester; Detachable Liner Fabric: Warm Fleece. Detachable Functional Liner: Skin Friendly, Lightweigt and Warm.Stand Collar Liner jacket, keep you warm in cold weather. Zippered Pockets: 2 Zippered Hand Pockets, 2 Zippered Pockets on Chest (enough to keep cards or keys)and 1 Hidden Pocket Inside.Zippered Hand Pockets and Hidden Pocket keep your things secure. Humanized Design: Adjustable and Detachable Hood and Adjustable cuff to prevent the wind and water,for a comfortable fit. 3 in 1 Detachable Design provide more convenience, you can separate the coat and inner as needed, or wear it together. It is suitable for different season and help you adapt to different climates",
+    image: "https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_.jpg",
+    category: "women's clothing"
+  }
 
-  const handleSave = () => {
+
+
+  const handleSave = ({ name, value }) => {
+    console.log('editted value', value);
+    // var isSame = (editProduct[name] === editProduct.price);
+
+    if (name === 'price') {
+      value = Number(value);
+    }
+    editProduct[name] = value;
+    console.log('isSame', editProduct);
     setEdit((prevState) => ({
       ...prevState,
       dataSave: true
@@ -34,21 +53,25 @@ const Details = () => {
   };
 
   const handleSubmit = () => {
-    // fetch('https://fakestoreapi.com/products/7', {
-    //   method: "PUT",
-    //   body: JSON.stringify(
-    //     {
-    //       title: 'test product',
-    //       price: 13.5,
-    //       description: 'lorem ipsum set',
-    //       image: 'https://i.pravatar.cc',
-    //       category: 'electronic'
-    //     }
-    //   )
-    // })
-    //   .then(res => res.json())
-    //   .then(json => console.log(json))
-    console.log('updated successfully')
+    fetch(`https://fakestoreapi.com/products/15`, {
+      method: "PUT",
+      body: JSON.stringify(
+        {
+          title: editProduct.title,
+          price: editProduct.price,
+          description: editProduct.description,
+          image: detailedProduct.image,
+          category: detailedProduct.category
+        }
+      )
+    }).then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // do update result validate here
+        alert("product updated successfully");
+        navigate('/');
+      })
+
   }
 
   return (
@@ -64,18 +87,21 @@ const Details = () => {
         {/* end of title */}
         <div className='row'>
           {/* col-10 mx-auto col-md-6 my-3 */}
-          <div className='col-10 mx-auto col-md-6 my-3'>
+          <div className='col-10 mx-auto col-md-6 my-3 align-center'>
             <img
-              className='img-fluid'
+              // className='img-fluid align-center ms-auto mt-auto'
+              className='img-fluid center-block d-block mx-auto'
               src={detailedProduct.image}
-              alt={detailedProduct.title} />
+              alt={detailedProduct.title} 
+              style={{maxHeight : "60%"}}  
+            />
           </div>
           {/* product description */}
           <div className='col-10 mx-auto col-md-6 my-3 text-capitalize'>
             <div>
 
               <h3>model : {edit.elementEdit ? <EditTextarea
-                name='textarea'
+                name='title'
                 defaultValue={detailedProduct.title}
                 style={{ paddingTop: "0" }}
                 onSave={handleSave}
@@ -110,7 +136,7 @@ const Details = () => {
 
             <div className='text-muted lead' style={{ fontSize: '1rem' }}>
               {edit.elementEdit ? <EditTextarea
-                name='textarea'
+                name='description'
                 defaultValue={detailedProduct.description}
                 style={{ paddingTop: "0" }}
                 onSave={handleSave}
@@ -131,7 +157,6 @@ const Details = () => {
                     edit
                   </ButtonContainer> : null
               }
-              {console.log('value of edir', save12)}
               {
                 !valueFromContext.user.admin ?
                   <ButtonContainer

@@ -114,6 +114,14 @@ function App() {
     }))
   };
 
+  const dataSave = id => {
+    const product = getItem(id);
+    setProducts(prevState => ({
+      ...prevState,
+      detailProduct: false
+    }))
+  };
+
   const increment = (id) => {
     console.log('increment function');
   }
@@ -205,7 +213,8 @@ function App() {
           decrement,
           removeItem,
           clearCart,
-          getProductName
+          getProductName,
+          dataSave
         }}>
           <Navbar />
           <Routes>
