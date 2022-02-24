@@ -52,8 +52,8 @@ const Details = () => {
     }))
   };
 
-  const handleSubmit = () => {
-    fetch(`https://fakestoreapi.com/products/15`, {
+  const handleSubmit = id => {
+    fetch(`https://fakestoreapi.com/products/${id}`, {
       method: "PUT",
       body: JSON.stringify(
         {
@@ -74,6 +74,19 @@ const Details = () => {
 
   }
 
+  const handleDelete = id => {
+    fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "DELETE"
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        // add delete response validation
+        alert("product deleted successfully");
+        navigate('/');
+      })
+  }
+
   return (
     <>
       {console.log("from context-details page", productFromContext)}
@@ -92,8 +105,8 @@ const Details = () => {
               // className='img-fluid align-center ms-auto mt-auto'
               className='img-fluid center-block d-block mx-auto'
               src={detailedProduct.image}
-              alt={detailedProduct.title} 
-              style={{maxHeight : "60%"}}  
+              alt={detailedProduct.title}
+              style={{ maxHeight: "60%" }}
             />
           </div>
           {/* product description */}
@@ -158,6 +171,13 @@ const Details = () => {
                   </ButtonContainer> : null
               }
               {
+                valueFromContext.user.admin &&
+                  !edit.elementEdit ?
+                  <ButtonContainer cart onClick={() => handleDelete(detailedProduct.id)}>
+                    delete
+                  </ButtonContainer> : null
+              }
+              {
                 !valueFromContext.user.admin ?
                   <ButtonContainer
                     cart
@@ -170,7 +190,7 @@ const Details = () => {
                   </ButtonContainer> : null}
               {
                 edit.dataSave ?
-                  <ButtonContainer cart onClick={() => handleSubmit()}>
+                  <ButtonContainer cart onClick={() => handleSubmit(detailedProduct.id)}>
                     save
                   </ButtonContainer> : null
               }
