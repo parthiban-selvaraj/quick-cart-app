@@ -8,15 +8,17 @@ const Product = ({ product }) => {
   const productFromContext = useContext(ProductContext);
   const valueFromContext = useContext(UserContext);
   return (
-    <ProductWrapper className='col-9 mx-auto col-md-6 col-lg-3 my-3'>
+    <ProductWrapper className='col-10 mx-auto col-md-6 col-lg-3 my-3'>
       {console.log("hello", productFromContext.product, product.id)}
       <div className='card'>
-        <div className='img-container p-5' onClick={() => productFromContext.handleDetail(product.id)}>
+        <div className='img-container' onClick={() => productFromContext.handleDetail(product.id)}>
           <Link to={"/details"}>
             <img
               className='card-img-top'
               src={product.image}
-              alt={product.title} />
+              alt={product.title} 
+              style={{maxHeight : "60%"}}
+            />
           </Link>
           {/* cart button */}
           { !valueFromContext.user.admin && 

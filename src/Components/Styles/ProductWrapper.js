@@ -20,8 +20,15 @@ const ProductWrapper = styled.div`
             color : white;
         }
     }
+    img {
+        width: 100%;
+        height: 220px;
+        object-fit: contain;
+    }
+
     .img-container {
         position : relative;
+        border-radius: 5px;
         overflow : hidden;
     }
     .card-img-top {

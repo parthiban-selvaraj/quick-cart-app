@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react';
 import { storeProducts, detailProduct } from './data';
 import Modal from './Components/Modal';
 import Login from './Components/Login';
+import Register from './Components/Register';
 import About from './Components/About';
 import Form from './Components/Form';
 import Checkout from './Components/Cart/Checkout';
@@ -227,6 +228,7 @@ function App() {
             <Route path='/user' element={<User />} />
             <Route path='/checkout' element={<Checkout />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
           <Modal />
