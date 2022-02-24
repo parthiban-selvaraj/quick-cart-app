@@ -32,7 +32,7 @@ function App() {
     firstName : userState ? userState.firstName : 'parthiban',
     lastName : userState ? userState.lastName : 'selvaraj',
     email : userState ? userState.email : 'test@g.com',
-    admin : userState ? userState.admin : true,
+    admin : userState ? userState.admin : false,
     loginStatus : true
   });
 

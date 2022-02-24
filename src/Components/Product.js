@@ -19,6 +19,7 @@ const Product = ({ product }) => {
               alt={product.title} />
           </Link>
           {/* cart button */}
+          { !valueFromContext.user.admin && 
           <button
             className='cart-btn'
             disabled={product.inCart ? true : false}
@@ -28,17 +29,17 @@ const Product = ({ product }) => {
             }
             }>
             {/* {console.log("state after add to cart", productFromContext)} */}
-            {product.inCart ?
+            { product.inCart ?
               (
                 <p className='text-capitalize mb-0' disabled>in cart</p>
               ) : (
                 <i className='fas fa-cart-plus' />
               )
             }
-          </button>
+          </button> }
           {/* edit button */}
           { valueFromContext.user.admin ? 
-          <Link to={{pathname: "/details", editOption: true , }}>
+          <Link to={"/details"} state={{ editOption: true }}>
             <button
               className='edit-btn'
               disabled={product.inCart ? true : false}
