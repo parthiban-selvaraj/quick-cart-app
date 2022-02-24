@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { ProductContext } from './Context/Context'
+import { ProductContext, UserContext } from './Context/Context'
 import ProductWrapper from './Styles/ProductWrapper';
 import PropTypes from 'prop-types';
 
 const Product = ({ product }) => {
   const productFromContext = useContext(ProductContext);
+  const valueFromContext = useContext(UserContext);
   return (
     <ProductWrapper className='col-9 mx-auto col-md-6 col-lg-3 my-3'>
       {console.log("hello", productFromContext.product, product.id)}
@@ -17,6 +18,7 @@ const Product = ({ product }) => {
               src={product.image}
               alt={product.title} />
           </Link>
+          {/* cart button */}
           <button
             className='cart-btn'
             disabled={product.inCart ? true : false}
@@ -34,6 +36,16 @@ const Product = ({ product }) => {
               )
             }
           </button>
+          {/* edit button */}
+          { valueFromContext.user.admin ? 
+          <Link to={{pathname: "/details", editOption: true , }}>
+            <button
+              className='edit-btn'
+              disabled={product.inCart ? true : false}
+              onClick={() => productFromContext.handleDetail(product.id)}>
+                  <i className='fas fa-pen' />
+            </button>
+          </Link> : null }
         </div>
         <div className='card-footer d-flex justify-content-between'>
           <p className='align-self-center mb-0'>

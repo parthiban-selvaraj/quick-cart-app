@@ -50,6 +50,26 @@ const ProductWrapper = styled.div`
     .cart-btn:hover {
         color : var(--mainYellow);
     }
+    .edit-btn {
+        position : absolute;
+        top : 0;
+        right : 0;
+        padding : 0.1rem 0.4rem;
+        background : var(--mainBlue);
+        border : none;
+        color : var(--mainWhite);
+        font-size : 1.1rem;
+        border-radius : 0 0 0 0.5rem;
+        transform : translate(100%, -100%);
+        transition : all 0.5s linear; 
+        text-align : center;
+    }
+    .img-container:hover .edit-btn {
+        transform : translate(0, 0);
+    }
+    .edit-btn:hover {
+        color : var(--mainYellow);
+    }
 `;
 
 export default ProductWrapper;

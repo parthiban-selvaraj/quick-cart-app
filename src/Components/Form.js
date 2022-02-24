@@ -1,6 +1,5 @@
 
 import React from 'react'
-import ButtonContainer from './Styles/ButtonContainer';
 
 const Form = (props) => {
   return ( 
@@ -11,8 +10,15 @@ const Form = (props) => {
         placeholder={"jewelery"}
         required
         autoFocus
-        autoComplete='on'
+        autoComplete={'on'}
+        list='products'
         />
+        <datalist id='products'>
+          <option value={"electronics"}/>
+          <option value={"jewelery"}/>
+          <option value={"men's clothing"}/>
+          <option value={"women's clothing"}/>
+        </datalist>
         <button className='form__button'>Search</button> 
         {/* <ButtonContainer>Search</ButtonContainer> */}
     </form>

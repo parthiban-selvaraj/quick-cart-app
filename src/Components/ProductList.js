@@ -15,7 +15,7 @@ const ProductList = () => {
             <div className='py-5'>
                 <div className='container'>
                     {
-                        productFromContext.product ?
+                        productFromContext.product[0] ?
                             <Title name={productFromContext.product[0].category} title={'products'} /> : null}
                     <div className='row'>
                         {console.log("from context", productFromContext)}
