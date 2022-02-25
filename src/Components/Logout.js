@@ -17,8 +17,8 @@ const Logout = () => {
 
 
   return (
-    <>
-      <div className='text-capitalize mt-10 mx-auto pt-5 text-center'>
+    <div className='centered'>
+      <div className='text-capitalize mx-auto text-center '>
         <h3>You are logged out. Click here to <Link to={"/login"}>
            login
         </Link></h3>
@@ -26,7 +26,7 @@ const Logout = () => {
       {/* add signin components */}
       {/* {console.log('login value', login.status)}
             { login.status && <Login />} */}
-    </>
+    </div>
   )
 }
 

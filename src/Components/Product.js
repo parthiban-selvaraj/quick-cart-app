@@ -8,7 +8,7 @@ const Product = ({ product }) => {
   const productFromContext = useContext(ProductContext);
   const valueFromContext = useContext(UserContext);
   return (
-    <ProductWrapper className='col-10 mx-auto col-md-6 col-lg-3 my-3'>
+    <ProductWrapper className='col-10 mx-auto col-md-6 col-lg-4 my-3'>
       {console.log("hello", productFromContext.product, product.id)}
       <div className='card'>
         <div className='img-container' onClick={() => productFromContext.handleDetail(product.id)}>

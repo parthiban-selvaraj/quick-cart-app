@@ -6,10 +6,13 @@ import ProfileWrapper from './Styles/ProfileWrapper'
 const Register = () => {
   return (
     <ProfileWrapper>
-      <div className="container mt-5 ms-auto me-auto card">
+      <div className='text-title'>
+        <h1 className='text-capitalize text-center mt-4'>Quick cart application</h1>
+      </div>
+      <div className="container ms-auto me-auto card mt-4">
         <div className='row'>
-          <div className='col-10 mx-auto col-md-6 justify-content-center mt-5'>
-            <i className='fa-solid fa-cart-shopping fa-10x p-5 ms-5 me-5 center-block d-block mx-auto' />
+          <div className='col-10 mx-auto col-md-6'>
+            <i className='fa-solid fa-cart-shopping fa-10x p-5 ms-5 me-5 center-block d-block' />
           </div>
           <div className='col-10 mx-auto col-md-6 my-3 text-capitalize text-center text-start' style={{ borderLeft: "solid 1px grey", paddingLeft: "1rem" }}>
             <h3 className='text-capitalize'>

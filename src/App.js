@@ -6,7 +6,7 @@ import ProductList from './Components/ProductList';
 import Details from './Components/Details';
 import Cart from './Components/Cart';
 import NotFound from './Components/NotFound';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import Logout from './Components/Logout';
 import User from './Components/User';
 import { ProductContext, UserContext } from './Components/Context/Context';
@@ -21,31 +21,31 @@ import Checkout from './Components/Cart/Checkout';
 
 
 function App() {
+  
 
   var productName = "";
 
-  
-   // fetching persisted user state from local storage
-  const userState = JSON.parse(localStorage.getItem('user'));
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    userId : userState ? userState.userId : 'parthi123',
-    firstName : userState ? userState.firstName : 'parthiban',
-    lastName : userState ? userState.lastName : 'selvaraj',
-    email : userState ? userState.email : 'test@g.com',
-    admin : userState ? userState.admin : false,
-    loginStatus : true
+    userId: '123',
+    firstName: 'parthiban',
+    lastName: 'selvaraj',
+    email: 'test@gmail.com',
+    admin: false,
+    loginStatus: false
   });
+
 
   // fetching persisted products state from local storage
   const savedState = JSON.parse(localStorage.getItem(`${user.firstName}`));
-  
+
   // populate fresh state values if no data persisted in local storage
   const [products, setProducts] = useState({
     product: savedState ? savedState.product : [],
     detailProduct: savedState ? savedState.detailProduct : detailProduct,
     cart: savedState ? savedState.cart : [],
-    user : savedState ? savedState.user : [],
+    user: savedState ? savedState.user : [],
     modalOpen: false,
     modalProduct: [],
     cartSubTotal: savedState ? savedState.cartSubTotal : 0,
@@ -115,12 +115,38 @@ function App() {
     }))
   };
 
-  const dataSave = id => {
-    const product = getItem(id);
-    setProducts(prevState => ({
-      ...prevState,
-      detailProduct: false
-    }))
+  const setLoginStatus = emailId => {
+    // get user details from state with given email id 
+    // for fetched user populate user state
+    // if no details then route to /register page
+    // const userDetail = JSON.parse(document.querySelector(`email:${emailId}`).value);
+    // fetching persisted user state from local storage
+    const userState = JSON.parse(localStorage.getItem("user"));
+    console.log('incoming email', emailId);
+    console.log('sourced data', userState);
+    
+    if (userState === null) {
+      // route to /Register
+      alert(`given email id ${emailId} not found. Please register`);
+      navigate("/register")
+    } else {
+      // if (Object.keys(userState).length === 0) {
+      if (userState.email === emailId) {
+  
+        setUser(prevState => ({
+          ...prevState,
+          userId: userState.userId,
+          firstName: userState.firstName,
+          lastName: userState.lastName,
+          email: userState.email,
+          admin: userState.admin,
+          loginStatus: true
+        }))
+      }
+      navigate('/');
+    }
+
+
   };
 
   const increment = (id) => {
@@ -170,10 +196,6 @@ function App() {
 
     e.preventDefault();
 
-    // const api_call = await fetch(`https://forkify-api.herokuapp.com/api/search?q=${recipeName}`);
-
-    // const data = await api_call.json()
-
     console.log('hello', productName);
     fetch(`https://fakestoreapi.com/products/category/${productName}`)
       .then((res) => res.json())
@@ -181,10 +203,6 @@ function App() {
         ...prevState,
         product: res
       })));
-    // setRecipes(data.recipes);
-
-    // console.log('get recipe function', recipes);
-    // console.log('empty screen');
     window.scroll(0, 130);
   };
 
@@ -201,9 +219,10 @@ function App() {
   // }, []);
 
   return (
-
-    <BrowserRouter>
-      <UserContext.Provider value={{user}}>
+      <UserContext.Provider value={{
+        ...user,
+        setLoginStatus
+      }}>
         <ProductContext.Provider value={{
           ...products,
           handleDetail,
@@ -214,8 +233,7 @@ function App() {
           decrement,
           removeItem,
           clearCart,
-          getProductName,
-          dataSave
+          getProductName
         }}>
           <Navbar />
           <Routes>
@@ -234,7 +252,6 @@ function App() {
           <Modal />
         </ProductContext.Provider>
       </UserContext.Provider>
-    </BrowserRouter>
   );
 }
 
