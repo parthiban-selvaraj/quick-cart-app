@@ -13,11 +13,11 @@ const User = () => {
           </div>
           <div className='col-10 me-auto col-md-6 my-3 text-capitalize text-start' style={{borderLeft: "solid 1px grey", paddingLeft:"1rem"}}>
             <h1 className='text-capitalize'>
-              {valueFromContext.user.firstName}, {valueFromContext.user.lastName}
+              {valueFromContext.firstName}, {valueFromContext.lastName}
             </h1>
             <p className="title">CEO and Founder, Example</p>
-            <p>{valueFromContext.user.email}</p>
-            {valueFromContext.user.admin ? <p>Role: <i>Admin</i></p> : null }
+            <p>{valueFromContext.email}</p>
+            {valueFromContext.admin ? <p>Role: <i>Admin</i></p> : null }
           </div>
         </div>
         <div className='row text-capitalize' style={{borderTop: "solid 1px grey", paddingLeft:"1rem"}}>

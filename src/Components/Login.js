@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from './Context/Context';
 import ButtonContainer from './Styles/ButtonContainer';
 import ProfileWrapper from './Styles/ProfileWrapper';
 
 const Login = () => {
   const valueFromContext = useContext(UserContext);
-  const navigate = useNavigate()
   return (
     <>
     <ProfileWrapper>

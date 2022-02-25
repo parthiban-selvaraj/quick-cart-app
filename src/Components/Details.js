@@ -164,21 +164,21 @@ const Details = () => {
                 </ButtonContainer>
               </Link>
               {
-                valueFromContext.user.admin &&
+                valueFromContext.admin &&
                   !edit.elementEdit ?
                   <ButtonContainer cart onClick={() => handleEdit()}>
                     edit
                   </ButtonContainer> : null
               }
               {
-                valueFromContext.user.admin &&
+                valueFromContext.admin &&
                   !edit.elementEdit ?
                   <ButtonContainer cart onClick={() => handleDelete(detailedProduct.id)}>
                     delete
                   </ButtonContainer> : null
               }
               {
-                !valueFromContext.user.admin ?
+                !valueFromContext.admin ?
                   <ButtonContainer
                     cart
                     disabled={detailedProduct.inCart ? true : false}

@@ -8,7 +8,7 @@ const Checkout = () => {
     return (
         <>
         <div className='mt-5 pt-5 text-muted lead text-capitalize' style={{ textAlign: "center" }}>
-            <h2>{valueFromContext.user.firstName} Your order-<strong><button style={{border: "0", borderBottom: "solid 1px var(--mainBlue)", background: "transparent"}}>QR4578</button></strong> successful!!!</h2>
+            <h2>{valueFromContext.firstName}, Your order-<strong><button style={{border: "0", borderBottom: "solid 1px var(--mainBlue)", background: "transparent"}}>QR4578</button></strong> successful!!!</h2>
             <h3>Thanks for shopping with us!</h3>
         </div>
             <div className='mt-5 pt-5' style={{ textAlign: "center" }}>

@@ -6,7 +6,7 @@ import ProductList from './Components/ProductList';
 import Details from './Components/Details';
 import Cart from './Components/Cart';
 import NotFound from './Components/NotFound';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Logout from './Components/Logout';
 import User from './Components/User';
 import { ProductContext, UserContext } from './Components/Context/Context';
@@ -28,10 +28,10 @@ function App() {
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
-    userId: '123',
-    firstName: 'parthiban',
-    lastName: 'selvaraj',
-    email: 'test@gmail.com',
+    userId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
     admin: false,
     loginStatus: false
   });
@@ -121,7 +121,7 @@ function App() {
     // if no details then route to /register page
     // const userDetail = JSON.parse(document.querySelector(`email:${emailId}`).value);
     // fetching persisted user state from local storage
-    const userState = JSON.parse(localStorage.getItem("user"));
+    const userState = JSON.parse(localStorage.getItem(`${emailId}`));
     console.log('incoming email', emailId);
     console.log('sourced data', userState);
     
@@ -134,6 +134,8 @@ function App() {
       if (userState.email === emailId) {
   
         setUser(prevState => ({
+           
+         
           ...prevState,
           userId: userState.userId,
           firstName: userState.firstName,
@@ -142,12 +144,38 @@ function App() {
           admin: userState.admin,
           loginStatus: true
         }))
+        
       }
       navigate('/');
     }
-
-
   };
+
+
+  const registerUser = () => {
+    console.log('register user');
+    let userId = 'testID';
+    let firstName = 'test'
+    let lastName ='test2'
+    let email = 'test@gmail.com'
+    let admin = false;
+    let loginStatus = false;
+    // check whether user exists already. if not then store them state and persist to local storage
+    setUser(prevState => {
+      localStorage.setItem(email, JSON.stringify({ ...user }));
+      localStorage.setItem(`${user.firstName}`, JSON.stringify({ ...products }))
+      return {
+      ...prevState,
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      admin: admin,
+      loginStatus: loginStatus
+    };
+  })
+    alert(`${email} has been registered successfully`);
+    navigate('/login');
+}
 
   const increment = (id) => {
     console.log('increment function');
@@ -187,8 +215,8 @@ function App() {
 
   // to persist user details to local storage
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify({ ...user }))
-  }, [user]);
+    localStorage.setItem(`${user.email}`, JSON.stringify({ ...user }));
+  }, [user, user.email]);
 
   const getProductName = (e) => {
     const recipeName = e.target.elements.productName.value;
@@ -221,7 +249,8 @@ function App() {
   return (
       <UserContext.Provider value={{
         ...user,
-        setLoginStatus
+        setLoginStatus,
+        registerUser
       }}>
         <ProductContext.Provider value={{
           ...products,
@@ -238,13 +267,13 @@ function App() {
           <Navbar />
           <Routes>
             {/* <Route path='/' element={<Login />} > */}
-            <Route path='/' element={<ProductList />} exact />
-            <Route path='/about' element={<About />} />
-            <Route path='/details' element={<Details />} />
-            <Route path='/cart' element={<Cart />} />
+            <Route path='/' element={user.loginStatus ? <ProductList /> : <Navigate to="/login" />} exact />
+            <Route path='/about' element={user.loginStatus ? <About /> : <Navigate to="/login" />} />
+            <Route path='/details' element={user.loginStatus ? <Details /> : <Navigate to="/login" />} />
+            <Route path='/cart' element={user.loginStatus ? <Cart /> : <Navigate to="/login" />} />
             <Route path='/logout' element={<Logout />} />
-            <Route path='/user' element={<User />} />
-            <Route path='/checkout' element={<Checkout />} />
+            <Route path='/user' element={user.loginStatus ? <User /> : <Navigate to="/login" />} />
+            <Route path='/checkout' element={user.loginStatus ? <Checkout /> : <Navigate to="/login" />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />

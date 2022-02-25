@@ -21,7 +21,7 @@ const Product = ({ product }) => {
             />
           </Link>
           {/* cart button */}
-          { !valueFromContext.user.admin && 
+          { !valueFromContext.admin && 
           <button
             className='cart-btn'
             disabled={product.inCart ? true : false}
@@ -40,7 +40,7 @@ const Product = ({ product }) => {
             }
           </button> }
           {/* edit button */}
-          { valueFromContext.user.admin ? 
+          { valueFromContext.admin ? 
           <Link to={"/details"} state={{ editOption: true }}>
             <button
               className='edit-btn'

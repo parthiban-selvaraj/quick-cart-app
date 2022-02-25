@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { UserContext } from './Context/Context'
 import ButtonContainer from './Styles/ButtonContainer'
 import ProfileWrapper from './Styles/ProfileWrapper'
 
 const Register = () => {
+  const valueFromContext = useContext(UserContext);
   return (
     <ProfileWrapper>
       <div className='text-title'>
@@ -73,11 +75,11 @@ const Register = () => {
               />
             </div>
             {/* Password ends */}
-            <Link to={"/"}>
-            <ButtonContainer className='mt-4'>
+            {/* <Link to={"/"}> */}
+            <ButtonContainer className='mt-4' onClick={() => valueFromContext.registerUser()}>
               register
             </ButtonContainer>
-            </Link>
+            {/* </Link> */}
             <div className='text-capitalize pt-2'>
                 <p>already have account?.click here to <Link to={"/login"}>login</Link></p>
             </div>
