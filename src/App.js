@@ -11,13 +11,17 @@ import Logout from './Components/Logout';
 import User from './Components/User';
 import { ProductContext, UserContext } from './Components/Context/Context';
 import { useState, useEffect } from 'react';
-import { storeProducts, detailProduct } from './data';
+import { detailProduct } from './data';
 import Modal from './Components/Modal';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import About from './Components/About';
-import Form from './Components/Form';
+// import Form from './Components/Form';
 import Checkout from './Components/Cart/Checkout';
+import { createStore } from 'redux';
+import allReducers from './Store/reducers';
+
+const store = createStore(allReducers);
 
 
 function App() {

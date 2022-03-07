@@ -27,10 +27,11 @@ const Login = () => {
             <div className="form-group form-row mt-4">
               <label className="col-lg-4">Email:</label>
               <input
-                type="text"
+                type="email"
                 className="form-control"
                 // value="{this.state.email}"
                 placeholder='example@example.com'
+                required
               // onChange={(event) => {
               //   this.setState({ email: event.target.value });
               // }}
@@ -43,6 +44,7 @@ const Login = () => {
               <input
                 type="password"
                 className="form-control"
+                required
               // value={this.state.password}
               // onChange={(event) => {
               //   this.setState({ password: event.target.value });
