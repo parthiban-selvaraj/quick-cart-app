@@ -18,13 +18,15 @@ import Register from './Components/Register';
 import About from './Components/About';
 // import Form from './Components/Form';
 import Checkout from './Components/Cart/Checkout';
-import { createStore } from 'redux';
-import allReducers from './Store/reducers';
+import { useSelector, useDispatch } from 'react-redux';
+import { signIn } from './Store/actions'
 
-const store = createStore(allReducers);
 
 
 function App() {
+
+  const logged = useSelector(state => state.logged);
+  const dispatch = useDispatch();
   
 
   var productName = "";
@@ -269,6 +271,8 @@ function App() {
           getProductName
         }}>
           <Navbar />
+          {console.log('state value', logged)}
+          <button onClick={() => dispatch(signIn())}>{logged ? "logout" : "login"}</button> 
           <Routes>
             {/* <Route path='/' element={<Login />} > */}
             <Route path='/' element={user.loginStatus ? <ProductList /> : <Navigate to="/login" />} exact />

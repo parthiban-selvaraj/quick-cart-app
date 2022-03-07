@@ -3,8 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { UserContext } from './Context/Context';
 import ButtonContainer from './Styles/ButtonContainer';
 import NavWrapper from './Styles/NavWrapper';
+import { useSelector, useDispatch } from 'react-redux';
+import { signIn } from '../Store/actions';
 
 const Navbar = () => {
+    const logged = useSelector(state => state.logged);
+    const dispatch = useDispatch();
     const valueFromContext = useContext(UserContext);
     const value = true;
     const location = useLocation();
@@ -42,7 +46,7 @@ const Navbar = () => {
                                 </Link>
 
                                 <Link to={'/logout'} className='ms-2'>
-                                    <ButtonContainer>
+                                    <ButtonContainer onClick={() => dispatch(signIn())}>
                                         <i className="fa-solid fa-right-from-bracket" /> logout
                                     </ButtonContainer>
                                 </Link>

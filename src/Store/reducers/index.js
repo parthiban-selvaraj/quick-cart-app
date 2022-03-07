@@ -1,10 +1,10 @@
 import UserReducer from "./UserReducer";
-import ProductReducer from "./ProductsReducer";
+// import ProductReducer from "./ProductsReducer";
 import { combineReducers } from 'redux';
 
 const allReducers = combineReducers ({
-    logged : UserReducer,
-    product : ProductReducer
+    logged : UserReducer
+    // product : ProductReducer
 });
 
 export default allReducers;
